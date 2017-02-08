@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html ng-app="testV" >
+<!-- <html> -->
+  <head>
+    <meta charset="utf-8">
+    <title>Linkware Design tool</title>
+    <link rel="stylesheet" href="/app.css">
+    <script type="text/javascript" src="./app.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-route.js"></script>
+
+  </head>
+  <body>
+    <!-- <div >
+      <p id='demo'>aaa</p>
+      <button type="button" onclick="myFunction()">Try it</button>
+
+    </div> -->
+
+
+    <div ng-controller="testFunction1" align=left>
+      {{ name }}<br></br>
+    </div>
+
+    <script>
+      var app=angular.module('testV',['ngRoute']);
+    app.controller('testFunction1', function($scope){
+      $scope.name="Identifying Variability and Setting Strategy";
+    });
+
+    </script>
+
+
+    <div ng-controller="variability_Identifier">
+      <table id="variability_table">
+        <tr>
+          <td>Variability Type</td>
+          <td>the condition of sub-service</td>
+          <td>Band Degree</td>
+          <td>Weight</td>
+          <td>Important Degree</td>
+          <td>Recommended Strategy</td>
+        </tr>
+        <tr>
+          <td>
+            <select>
+              <option value="V1">Arrival variability</option>
+              <option value="V2">Request variability</option>
+              <option value="V3">Capability variability</option>
+              <option value="V4">Effort variability</option>
+              <option value="V5">Subjective preference variability</option>
+            </select>
+          </td>
+          <td><input type="text" id="sub-service" value="The elder needs the service at ant time." style="width: 200px"></td>
+          <td><input type="number" id="band_Degree" value="0" min="0" max="10" onchange="calculate_important_degree()" style="width: 100px;"></td>
+          <td><input type="number" id="weight" value="0" min="1" max="5" onchange="calculate_important_degree()" style="width: 50px;"></td>
+          <td><span id="important_degree"></span></td>
+          <td><span id="r_strategy" style="width: 200px"></sapn></td>
+          <td><input id="select" type="checkbox" onclick="show_FlowElements()" style="width: 25px"></td>
+        </tr>
+      </table>
+
+      <button type="button" id="add_fuc" onclick="add_data()">ADD</button>
+      <button type="button" id="remove_fuc" onclick="remove_data()">Remove</button>
+    </div>
+    <br><br>
+    <div class='container'>
+      <div class='left' id="flow_table" style="float:left">
+
+      </div>
+    </div>
+
+    <script>
+    app.controller('variability_Identifier', function($scope){
+
+      $scope.variability="  ";
+
+    });
+    </script>
+
+
+    <style>
+      table, th , td  {
+        border: 1px solid grey;
+        border-collapse: collapse;
+        padding: 15px;
+        text-align: center;
+      }
+    </style>
+
+
+  </body>
+</html>
