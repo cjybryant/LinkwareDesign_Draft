@@ -1,52 +1,41 @@
 
 
 <!DOCTYPE html>
-<html ng-app="testV" >
+<html>
 <!-- <html> -->
   <head>
     <meta charset="utf-8">
     <title>Linkware Design tool</title>
     <link rel="stylesheet" href="/app.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="./app.js"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-route.js"></script>
-
   </head>
+
   <body>
-    <!-- <div >
-      <p id='demo'>aaa</p>
-      <button type="button" onclick="myFunction()">Try it</button>
+  <div class="container">
+    <p class="activity_selected">activity 1</p><br>
+    <p>Identifying Variability and Setting Strategy</p>
+    <div id="tableContainer" class="flexbox">
 
-    </div> -->
+    <div id="table_v" class="variability_Identifier_table">
 
-
-    <div ng-controller="testFunction1" align=left>
-      {{ name }}<br></br>
-    </div>
-
-    <script>
-      var app=angular.module('testV',['ngRoute']);
-    app.controller('testFunction1', function($scope){
-      $scope.name="Identifying Variability and Setting Strategy";
-    });
-
-    </script>
-
-
-    <div ng-controller="variability_Identifier">
-      <table id="variability_table">
+      <table class="table">
         <tr>
-          <td>Variability Type</td>
-          <td>the condition of sub-service</td>
-          <td>Band Degree</td>
-          <td>Weight</td>
-          <td>Important Degree</td>
-          <td>Recommended Strategy</td>
+          <th>Variability Type</th>
+          <th>the condition of sub-service</th>
+          <th>Band Degree</th>
+          <th>Weight</th>
+          <th>Important Degree</th>
+          <th>Recommended Strategy</th>
+          <th><span class="table-add glyphicon glyphicon-plus"></span></th>
         </tr>
-        <tr>
+        <tr class=row_1>
+          <!--variability type-->
           <td>
-            <select>
+            <select class="v_type form-control input-sm">
               <option value="V1">Arrival variability</option>
               <option value="V2">Request variability</option>
               <option value="V3">Capability variability</option>
@@ -54,43 +43,135 @@
               <option value="V5">Subjective preference variability</option>
             </select>
           </td>
-          <td><input type="text" id="sub-service" value="The elder needs the service at ant time." style="width: 200px"></td>
-          <td><input type="number" id="band_Degree" value="0" min="0" max="10" onchange="calculate_important_degree()" style="width: 100px;"></td>
-          <td><input type="number" id="weight" value="0" min="1" max="5" onchange="calculate_important_degree()" style="width: 50px;"></td>
-          <td><span id="important_degree"></span></td>
-          <td><span id="r_strategy" style="width: 200px"></sapn></td>
-          <td><input id="select" type="checkbox" onclick="show_FlowElements()" style="width: 25px"></td>
+
+          <!--sub-service-->
+          <td><input type="text" class="sub_service form-control input-sm"></td>
+
+          <!--Band degree-->
+          <td>
+            <input type="range" class="b_degree" min="0" max="20" step="1" value="10">
+          </td>
+
+          <!--weight-->
+          <td>
+            <select class="weight form-control input-sm" >
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </td>
+
+          <!--importance degree-->
+          <td><p class="i_degree">5</p></td>
+
+          <!--recommeddend-->
+          <td><p class="re_strategy">LCA > UR > CR</p></td>
+
+          <!--deleteRow-->
+          <td>
+              <span class="table-remove glyphicon glyphicon-remove"></span>
+          </td>
+          <td>
+              <span class="table-lookup glyphicon glyphicon-edit"></span>
+          </td>
+
+        </tr>
+
+        <!--dynamic rows-->
+        <tr class="hide">
+          <td>
+            <select class="v_type form-control input-sm">
+              <option value="V1">Arrival variability</option>
+              <option value="V2">Request variability</option>
+              <option value="V3">Capability variability</option>
+              <option value="V4">Effort variability</option>
+              <option value="V5">Subjective preference variability</option>
+            </select>
+          </td>
+
+          <!--sub-service-->
+          <td><input type="text" class="sub_service form-control input-sm"></td>
+
+          <!--Band degree-->
+          <td>
+            <input type="range" class="b_degree" min="0" max="20" step="1" value="10">
+          </td>
+
+          <!--weight-->
+          <td>
+            <select class="weight form-control input-sm">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </td>
+
+          <!--importance degree-->
+          <td><p class="i_degree">5</p></td>
+
+          <!--recommeddend-->
+          <td><p class="re_strategy">LCA > UR > CR</p></td>
+
+          <!--deleteRow-->
+          <td>
+              <span class="table-remove glyphicon glyphicon-remove"></span>
+          </td>
+          <td>
+              <span class="table-lookup glyphicon glyphicon-edit"></span>
+          </td>
         </tr>
       </table>
 
-      <button type="button" id="add_fuc" onclick="add_data()">ADD</button>
-      <button type="button" id="remove_fuc" onclick="remove_data()">Remove</button>
     </div>
-    <br><br>
-    <div class='container'>
-      <div class='left' id="flow_table" style="float:left">
+    <br>
 
-      </div>
+    <div>
+      <span class="element_arrow glyphicon glyphicon-arrow-right"></span>
     </div>
 
-    <script>
-    app.controller('variability_Identifier', function($scope){
+    <div class="fulfillment_table">
+      <table class="table">
+        <tr>
+          <th>Flow Elements</th>
+          <th>Degree of Flow Elements Fulfillment</th>
+          <th>Percentage</th>
+        </tr>
+        <tr class=f1>
+          <!--<td><p class="f_element" id="f_ele"></p></td>-->
+          <td>
+            <select class="f_element form-control input-sm" id=f_ele>
+              <option>validation</option>
+              <option>2</option>
+            </select>
+          </td>
+          <td><p class="degree_fullfll"></p></td>
+        </tr>
+      </table>
+    </div>
+  </div> <!--ene of table flexbox-->
 
-      $scope.variability="  ";
+    <br>
 
-    });
-    </script>
+    <button id="export-btn" class="btn btn-primary">Export Data</button>
+    <p id="export"></p>
+
+    <div class="plan plan-highlight">
+      <!--<p class="plan-recommended"> </p>-->
+      <h3 class="plan-title">LFEL( )</h3>
+      <p class="plan-price">score:60</p>
+      <!-- <ul class="plan-features">
+        <li class="plan-feature">5 <span class="plan-feature-name">websites</span></li>
+        <li class="plan-feature">20<span class="plan-feature-unit">GB</span> <span class="plan-feature-name">storage</span></li>
+        <li class="plan-feature">10 <span class="plan-feature-name">users</span></li>
+      </ul> -->
+      <!--<a rel="nofollow" rel="noreferrer"href="#" class="plan-button">Choose Plan</a>-->
+    </div>
 
 
-    <style>
-      table, th , td  {
-        border: 1px solid grey;
-        border-collapse: collapse;
-        padding: 15px;
-        text-align: center;
-      }
-    </style>
-
-
+  <div> <!--ene of container-->
   </body>
 </html>
