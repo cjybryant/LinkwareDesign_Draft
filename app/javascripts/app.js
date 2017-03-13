@@ -44,25 +44,130 @@ window.onload = function() {
 $(document).ready(function() {
   // input from powei's value network
   var activity_input = [];
+  //{ source: 1, target: 2, interaction: [{ name: 'b=c', give: 'ttt', receive: 'rrr' }] }
 
   var $TABLE=$("#table_v");
+  var $TABLE_F=$("#table_f");
 
+  var all_data_cal=[];
+  var init_f_array=[];
+  var init_f2_array=[];
+  init_f_array.push(init_f2_array);
+  all_data_cal.push(init_f_array);
   //add row
   $(".table-add").click(function(){
     var i=$('#table_v tr').length-1;
     var $clone=$TABLE.find('tr.hide').clone(true).removeClass('hide table-line').addClass('row_'+i);
     $TABLE.find('table').append($clone);
+
   });
   //remove row
   $('.table-remove').click(function(){
     $(this).parents('tr').detach();
   });
   //to lookup the flow elements
+  var num_col=-1;
   $('.table-lookup').click(function(){
-    //alert($(this).parents().children('td:eq(4)').text());
-    // need to cross the div to find the "class="f_element"
-    $('#f_ele').text("validation");
+    var col=$(this).parents("td").parents("tr").index()-1;
+    if(col==0){col++;}
+    num_col=col; // 1
+
+    var cnt_l=$('#table_f tr').length;
+    // 清空右邊flow table資料
+    for(i=cnt_l; i>=2; i--){
+      $TABLE_F.find('tr').eq(i).detach();
+    }
+
+    // 把資料塞回去 !! 當沒有資料時會有錯誤, 但是不知道怎麼把它濾掉
+    // if((all_data_cal[num_col-1][0][0])==num_col){
+    //
+    // };
+    var j=1;
+    var $clone=$TABLE_F.find('tr.hide').clone(true).removeClass('hide table-line').addClass('row_'+j);
+    $TABLE_F.find('table').append($clone);
+    // 沒用 GG
+    $TABLE_F.find('table').children('tbody').find('tr').eq(1).find('td').eq(1).children('.f_degree').value="0";
   });
+
+  var sum_f=0; // 總 達程度 的總和
+  var sum_c=0; // 總 複雜度 的總和
+  var total_cost=0 // 總 cost
+
+  // save button
+  $('#cal-btn').click(function(){
+    var data_cal = [];
+    var $rows = $TABLE_F.find('tr:not(:hidden)');
+    $rows.shift();
+    $rows.each(function () {
+      var $td = $(this).find('td');
+      var h = {};
+      h[0]=num_col;
+      h[1]=$td.find('.f_element').val();
+      h[2]=$td.find('.f_degree').val();
+      h[3]=$td.find('.c_degree').val();
+      data_cal.push(h);
+    });
+    all_data_cal.splice(num_col-1,1,data_cal);
+    //all_data_cal.push(data_cal);
+    //var sum_f=0; // 單一變異性中的 達程度 的總和
+    //var sum_c=0; // 單一變異性中的 複雜度 的總和
+    // var i=0;
+    // var lo_sum_f=0;
+    // var lo_sum_c=0;
+    // $.each(data_cal,function(){
+    //   lo_sum_f+=parseInt(data_cal[i]["2"]);
+    //   lo_sum_c+=parseInt(data_cal[i]["3"]);
+    //   i++;
+    // });
+    // $('#LFEL').text(((lo_sum_f/2))-(lo_sum_c/2));
+    // var LFEL_score=cal_LFEL();
+    // $('#LFEL').text(LFEL_score);
+    //$('#export').text(JSON.stringify(data_cal));
+    cal_LFEL();
+    U();
+  });
+  function U(){
+    $('#export').text(JSON.stringify(all_data_cal));
+    /*
+    [ [ {"0":1,"1":"validation","2":"50","3":"50"},{"0":1,"1":"anytime service","2":"50","3":"50"} ] ,
+      [ {"0":2,"1":"self service","2":"50","3":"50"} ]
+    ]
+    */
+  };
+  function cal_LFEL(){
+    var sum_f=0;
+    var sum_c=0;
+    total_cost=$('.cost_degree').val();
+    for( i=0 ; i< all_data_cal.length; i++){
+      for(j=0 ; j<all_data_cal[i].length;j++){
+        sum_f+=parseInt(all_data_cal[i][j][2]);
+        sum_c+=parseInt(all_data_cal[i][j][3]);
+      }
+    }
+    var LFEL_score=sum_f-(sum_c/2)-(total_cost/2);
+    $('#LFEL').text(LFEL_score);
+    // 分數沒有除以所有 variability的數量
+  }
+  //$('#LFEL').text(sum_f+" "+sum_c);
+  // $(function(){
+  //     $('.f_element').editableSelect();
+  // });
+
+  $('.cost_degree').change(function(){
+    cal_LFEL();
+  });
+  // flow table opertion
+  // add row
+  $(".f_table-add").click(function(){
+    var i=$('#table_f tr').length-1;
+    var $clone=$TABLE_F.find('tr.hide').clone(true).removeClass('hide table-line').addClass('row_'+i);
+    $TABLE_F.find('table').append($clone);
+  });
+  //remove row
+  $('.f_table-remove').click(function(){
+    $(this).parents('tr').detach();
+  });
+
 
   //calculate importance degree
   var temp2=10;
@@ -101,6 +206,8 @@ $(document).ready(function() {
     $ID_RS.parents().children('td:eq(5)').text(msg_re_strategy);
   }
 
+
+
   // get the value
   jQuery.fn.pop = [].pop;
   jQuery.fn.shift = [].shift;
@@ -109,9 +216,9 @@ $(document).ready(function() {
     var data = [];
     var headers=[];
     // $rows.shift()
-      $($rows.shift()).find('th:not(:empty)').each(function () {
-        headers.push($(this).text().toLowerCase());
-      });
+    $($rows.shift()).find('th:not(:empty)').each(function () {
+      headers.push($(this).text().toLowerCase());
+    });
     $rows.each(function () {
       var $td = $(this).find('td');
       var h = {};
@@ -123,7 +230,6 @@ $(document).ready(function() {
       h[headers[3]]=$td.find('.weight').val();
       h[headers[4]]=$td.eq(4).text();
       h[headers[5]]=$td.eq(5).text();
-
       data.push(h);
     });
     // $('#export').text(data);

@@ -5,11 +5,13 @@
     <meta charset="utf-8">
     <title>Linkware Design tool</title>
     <link rel="stylesheet" href="/app.css">
+    <link href="//rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="./app.js"></script>
+    <script src="//rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.js"></script>
   </head>
 
   <body>
@@ -131,36 +133,54 @@
       <span class="element_arrow glyphicon glyphicon-arrow-right"></span>
     </div>
 
-    <div class="fulfillment_table">
+    <div id="table_f" class="fulfillment_table">
       <table class="table">
+        <thead>
         <tr>
           <th>Flow Elements</th>
           <th>Degree of Flow Elements Fulfillment</th>
-          <th>Percentage</th>
+          <th>Complexity of interaction</th>
+          <th><span class="f_table-add glyphicon glyphicon-plus"></span></th>
         </tr>
-        <tr class=f1>
-          <!--<td><p class="f_element" id="f_ele"></p></td>-->
+      </thead>
+        <!-- <tr class=f1>
           <td>
-            <select class="f_element form-control input-sm" id=f_ele>
+            <select class="f_element form-control input-sm">
               <option>validation</option>
-              <option>2</option>
+              <option>self service</option>
+              <option>anytime service</option>
             </select>
           </td>
-          <td><p class="degree_fullfll"></p></td>
+          <td><input type="range" class="f_degree" min="0" max="100" step="1" value="50"></td>
+          <td><input type="range" class="c_degree" min="0" max="100" step="1" value="50"></td>
+          <td><span class="f_table-remove glyphicon glyphicon-remove"></span></td>
+        </tr> -->
+        <tbody>
+        <tr class="hide">
+          <td>
+            <select class="f_element form-control input-sm">
+              <option>validation</option>
+              <option>self service</option>
+              <option>anytime service</option>
+            </select>
+          </td>
+          <td><input type="range" class="f_degree" min="0" max="100" step="1" value="50"></td>
+          <td><input type="range" class="c_degree" min="0" max="100" step="1" value="50"></td>
+          <td><span class="f_table-remove glyphicon glyphicon-remove"></span></td>
         </tr>
+      </tbody>
       </table>
+      <button id="cal-btn" class="btn btn-primary">save</button>
     </div>
   </div> <!--ene of table flexbox-->
 
     <br>
 
-    <button id="export-btn" class="btn btn-primary">Export Data</button>
-    <p id="export"></p>
-
+    <div id="C_Container" class="flexbox">
     <div class="plan plan-highlight">
       <!--<p class="plan-recommended"> </p>-->
-      <h3 class="plan-title">LFEL( )</h3>
-      <p class="plan-price">score:60</p>
+      <h3 class="plan-title"  align="center" >LFEL( )</h3>
+      <p id="LFEL" class="LFEL_score"  align="center">0</p>
       <!-- <ul class="plan-features">
         <li class="plan-feature">5 <span class="plan-feature-name">websites</span></li>
         <li class="plan-feature">20<span class="plan-feature-unit">GB</span> <span class="plan-feature-name">storage</span></li>
@@ -169,6 +189,17 @@
       <!--<a rel="nofollow" rel="noreferrer"href="#" class="plan-button">Choose Plan</a>-->
     </div>
 
+    <div class="plan plan-highlight2">
+      <!--<p class="plan-recommended"> </p>-->
+      <h3 class="plan-title" align="center">Cost</h3>
+      <p id="cost" class="Cost"></p>
+      <input type="range" class="cost_degree" min="0" max="100" step="5" value="0">
+    </div>
+    </div>
+    <br>
+
+    <button id="export-btn" class="btn btn-primary">Export Data</button>
+    <p id="export"></p>
 
   <div> <!--ene of container-->
   </body>

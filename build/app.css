@@ -81,7 +81,12 @@ h3 {
 
 }
 
-
+.f_table-add {
+  color: #070;
+}
+.f_table-remove {
+  color: #700;
+}
 /*band degree's range slider css */
 input[type="range"]{
   -webkit-appearance: none;
@@ -129,12 +134,22 @@ input[type="range"]::-webkit-slider-thumb:after {
   margin-bottom: 0;
   padding-left: 15px;
   padding-right: 15px;
-  width: 170px;
-  height: 300px;
+  width: 200px;
+  height: 170px;
   border: 4px solid #7BDB90;
   border-radius: 10px
 }
 
+.plan-highlight2 {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 200px;
+  height: 170px;
+  border: 4px solid #FF1F98;
+  border-radius: 10px
+}
 
 .fulfillment_table {
   position: relative;
@@ -144,11 +159,20 @@ input[type="range"]::-webkit-slider-thumb:after {
 .fulfillment_table .glyphicon {
   font-size: 20px;
 }
-
+#LFEL{
+  font-size: 40px;
+}
 /* 自動調整排版 from john ref.flexbox*/
 #tableContainer{
   display:flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+}
+
+#C_Container{
+  display:flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-start;
 }
